@@ -1,0 +1,67 @@
+.inicio {
+  text-align: center;
+  padding: 20px;
+  background-color: #f9f9f9; /* Fondo más claro */
+}
+
+.section-title {
+  font-size: 2em;
+  margin-bottom: 20px;
+  color: #333; /* Color más oscuro para el contraste */
+}
+
+.bolitas-container {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  margin-bottom: 40px; /* Más espacio entre secciones */
+}
+
+.bolita {
+  width: 350px; /* Ancho de las bolitas */
+  margin: 25px; /* Espaciado mayor */
+  border-radius: 10px;
+  border: 2px solid black; /* Borde negro */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  padding: 25px; /* Espaciado interno mayor */
+  transition: transform 0.3s, box-shadow 0.3s; /* Transición más suave */
+  background-color: white; /* Fondo blanco para cada bolita */
+}
+
+.bolita img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.bolita h3 {
+  margin: 10px 0;
+  color: #000000; /* Un tono gris para los títulos */
+}
+
+.bolita p {
+  font-size: 0.9em;
+  color: #000000; /* Un tono gris para la descripción */
+}
+
+.bolita:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada al pasar el mouse */
+}
+
+.clientes-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.cliente {
+  width: 180px; /* Ancho reducido del cliente */
+  margin: 15px; /* Espaciado mayor */
+}
+
+.cliente img {
+  width: 100%;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}

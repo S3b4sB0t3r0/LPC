@@ -1,0 +1,123 @@
+/* Estilos para el formulario de registro */
+.registro-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centra horizontalmente */
+  justify-content: center; /* Centra verticalmente */
+  text-align: center;
+  color: rgb(0, 0, 0);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 40px;
+  font-family: Arial, sans-serif;
+  min-height: 100vh;
+  font-weight: bold;
+}
+
+.register-logo {
+  max-width: 150px; /* Aumenta el tamaño máximo del logo */
+  margin-bottom: 20px; /* Espacio debajo del logo */
+}
+
+.registro-container h2 {
+  font-size: 36px;
+  margin-bottom: 20px;
+}
+
+.registro-container p {
+  font-size: 18px;
+  margin-bottom: 40px;
+}
+
+#registro-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centra los elementos dentro del formulario */
+  background-color: rgba(255, 255, 255, 0.8); /* Fondo semitransparente */
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 400px;
+  width: 100%; /* Hace que el formulario ocupe el 100% del contenedor */
+}
+
+#registro-form input {
+  width: 100%;
+  padding: 15px;
+  margin: 10px 0;
+  border-radius: 5px;
+  border: none;
+  background-color: #444;
+  color: white;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+.password-container {
+  position: relative;
+  width: 100%;
+}
+
+.password-container input {
+  width: 100%;
+  padding-right: 40px; /* Espacio adicional para el ícono */
+}
+
+.toggle-password {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #fff;
+}
+
+#registro-form button {
+  width: 100%;
+  padding: 15px 0;
+  background-color: #000000; /* Un botón de color negro */
+  color: rgb(255, 255, 255);
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  transition: background-color 0.3s;
+}
+
+#registro-form button:hover {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+#registro-form input::placeholder {
+  color: #bbb;
+}
+
+/* Notificaciones */
+.notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 15px;
+  border-radius: 5px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  transition: opacity 0.5s ease-in-out;
+  z-index: 1000; /* Asegura que esté por encima de otros elementos */
+}
+
+/* Estilo para el mensaje de éxito */
+.notification[data-id="registro.success"] {
+  background-color: rgba(0, 128, 0, 0.9); /* Verde para éxito */
+  color: white;
+}
+
+/* Estilo para el mensaje de error */
+.notification[data-id="registro.error"] {
+  background-color: rgba(255, 0, 0, 0.9); /* Rojo para error */
+  color: white;
+}
+
+/* Estilo para el mensaje de advertencia (por ejemplo, contraseñas no coincidentes) */
+.notification[data-id="registro.warning"] {
+  background-color: rgba(255, 165, 0, 0.9); /* Naranja para advertencia */
+  color: white; 
+}

@@ -1,0 +1,44 @@
+.carrusel-container {
+    position: relative;
+    width: 100%;
+    max-width: 600px; /* Reduce el ancho máximo */
+    margin: auto;
+    overflow: hidden; /* Oculta el contenido que se sale del contenedor */
+    border-radius: 10px; /* Bordes redondeados */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Sombra para profundidad */
+  }
+  
+  .carrusel-img {
+    width: 100%;
+    height: auto; /* Mantiene la proporción de la imagen */
+    border-radius: 10px; /* Bordes redondeados */
+    transition: transform 0.5s ease; /* Transición suave */
+  }
+  
+  .carrusel-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(255, 255, 255, 0.7);
+    border: none;
+    font-size: 1.5em; /* Reduce el tamaño del texto de los botones */
+    cursor: pointer;
+    padding: 8px 10px; /* Reduce el padding de los botones */
+    border-radius: 50%; /* Botones redondos */
+    transition: background-color 0.3s; /* Solo cambio de color */
+    z-index: 10; /* Asegura que los botones estén en el frente */
+  }
+  
+  .carrusel-button:hover {
+    background-color: rgba(255, 255, 255, 1); /* Cambia el color de fondo al hacer hover */
+    /* Se eliminó el transform para que no escale */
+  }
+  
+  .carrusel-prev {
+    left: 10px;
+  }
+  
+  .carrusel-next {
+    right: 10px;
+  }
+  

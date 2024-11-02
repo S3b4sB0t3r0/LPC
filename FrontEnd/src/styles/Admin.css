@@ -1,0 +1,642 @@
+/* General Styles */
+.admin-container {
+  display: flex;
+  font-family: Arial, sans-serif;
+}
+
+.admin-nav {
+  width: 200px;
+  background-color: #f4f4f4;
+  padding: 20px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.admin-nav h2 {
+  text-align: center;
+}
+
+.admin-nav ul {
+  list-style: none;
+  padding: 0;
+}
+
+.admin-nav li {
+  margin: 10px 0;
+}
+
+.admin-nav a {
+  text-decoration: none;
+  color: #333;
+  padding: 10px;
+  display: block;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.admin-nav a:hover {
+  background-color: #e2e2e2;
+}
+
+.admin-content {
+  padding: 20px;
+  flex: 1;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.admin-section-title {
+  margin-bottom: 20px;
+  color: #333;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.admin-table th,
+.admin-table td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.admin-table th {
+  background-color: #f7f7f7;
+  font-weight: bold;
+}
+
+/* Search Input Style */
+.admin-search-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.admin-search-input {
+  width: 100%;
+  padding: 12px 20px 12px 40px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  transition: border-color 0.3s;
+}
+
+.admin-search-input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.search-icon {
+  position: absolute;
+  left: 15px;
+  font-size: 18px;
+  color: #aaa;
+}
+
+/* Admin Role */
+.admin-role {
+  margin-bottom: 20px;
+  font-weight: bold;
+  color: black;
+}
+
+/* Eventos */
+.admin-event-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form-row {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.admin-input {
+  flex: 1;
+  min-width: 150px;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  transition: border-color 0.3s;
+  margin: 0 5px;
+}
+
+.admin-input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.admin-submit-button {
+  margin-top: 20px;
+  padding: 12px 20px;
+  background-color: green;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.admin-submit-button:hover {
+  margin-top: 20px;
+  padding: 12px 20px;
+  background-color: green;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+/* Estilo general para todos los botones */
+button {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+/* Identificadores únicos para cada tipo de botón */
+#btn-guardar {
+  background-color: #4CAF50;
+}
+
+#btn-cancelar {
+  background-color: #f44336;
+}
+
+#btn-editar {
+  background-color: #008CBA;
+}
+
+#btn-eliminar {
+  background-color: #e53935;
+}
+
+#btn-enviar {
+  background-color: #FF9800;
+}
+
+#btn-volver {
+  background-color: #9E9E9E;
+}
+
+#btn-buscar {
+  background-color: #3F51B5;
+}
+
+/* Estilo específico para los botones de la columna "Acción" en teatros */
+.teatro-accion {
+  display: flex;
+  gap: 10px; /* Espacio entre los botones */
+  justify-content: center;
+  align-items: center;
+}
+
+.teatro-accion .btn-eliminar {
+  background-color: #e53935;
+}
+
+.teatro-accion .btn-editar {
+  background-color: #4CAF50;
+}
+
+/* Hover para todos los botones */
+button:hover {
+  opacity: 0.9;
+}
+
+/* Ajuste específico para los botones en la tabla de teatros */
+.admin-table td .action-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .form-row {
+    flex-direction: column;
+  }
+}
+
+/* Estilos para la ventana modal de edición en teatros */
+#admin-teatros-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+#admin-teatros-modal-content {
+  background: #ffffff;
+  width: 90%;
+  max-width: 600px;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  animation: fadeIn 0.3s ease-out;
+}
+
+#admin-teatros-modal-content h2 {
+  font-size: 24px;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+#admin-teatros-modal-content form {
+  display: flex;
+  flex-direction: column;
+}
+
+#admin-teatros-modal-content label {
+  margin-top: 10px;
+  font-size: 16px;
+  color: #555;
+}
+
+#admin-teatros-modal-content input[type="text"],
+#admin-teatros-modal-content input[type="number"] {
+  margin-top: 5px;
+  padding: 10px;
+  font-size: 14px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+}
+
+#admin-teatros-modal-content button[type="submit"],
+#admin-teatros-modal-content button[type="button"] {
+  margin-top: 20px;
+  padding: 12px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#admin-teatros-modal-content button[type="submit"] {
+  background-color: #007bff;
+  color: white;
+  border: none;
+}
+
+#admin-teatros-modal-content button[type="button"] {
+  background-color: #f44336;
+  color: white;
+  border: none;
+}
+
+#admin-teatros-modal-content button:hover {
+  opacity: 0.9;
+}
+
+/* Animación de entrada */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+
+/* Estilos específicos para la tabla de teatros */
+#admin-teatros-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+#admin-teatros-table th,
+#admin-teatros-table td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: left;
+  vertical-align: middle;
+}
+
+#admin-teatros-table th {
+  background-color: #f7f7f7;
+  font-weight: bold;
+  text-align: center;
+}
+
+#admin-teatros-table td {
+  text-align: center;
+}
+
+#admin-teatros-table .action-button {
+  display: inline-block;
+  margin: 0 5px;
+  padding: 8px 12px;
+  font-size: 14px;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+/* Color específico para cada botón de acción */
+#admin-teatros-table .delete-button {
+  background-color: #e53935; /* Rojo para eliminar */
+}
+
+#admin-teatros-table .edit-button {
+  background-color: #007bff; /* Azul para editar */
+}
+
+/* Hover effect para los botones */
+#admin-teatros-table .action-button:hover {
+  opacity: 0.9;
+}
+
+/* Asegurar que los botones estén alineados horizontalmente */
+#admin-teatros-table td .action-button-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+
+
+
+/* Estilos específicos para la tabla de eventos */
+#admin-eventos-table .action-button {
+  display: inline-block;
+  margin: 0 5px;
+  padding: 8px 12px;
+  font-size: 14px;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+/* Color específico para cada botón de acción */
+#admin-eventos-table .delete-button {
+  background-color: #e53935; /* Rojo para eliminar */
+}
+
+#admin-eventos-table .edit-button {
+  background-color: #007bff; /* Azul para editar */
+}
+
+#admin-eventos-table .toggle-button {
+  background-color: #4caf50; /* Verde para activar/desactivar */
+}
+
+/* Hover effect para los botones */
+#admin-eventos-table .action-button:hover {
+  opacity: 0.9;
+}
+
+/* Asegurar que los botones estén alineados horizontalmente */
+#admin-eventos-table td .action-button-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+
+
+/* Estilos específicos para la tabla de contactos */
+#admin-contactos-table .action-button {
+  display: inline-block;
+  margin: 0 5px;
+  padding: 8px 12px;
+  font-size: 14px;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+/* Color específico para el botón de eliminar */
+#admin-contactos-table .delete-button {
+  background-color: #e53935; /* Rojo para eliminar */
+}
+
+/* Hover effect para el botón */
+#admin-contactos-table .action-button:hover {
+  opacity: 0.9;
+}
+
+
+/* Estilos específicos para la tabla de reservas */
+#admin-reservas-table .action-button {
+  display: inline-block;
+  margin: 0 5px;
+  padding: 8px 12px;
+  font-size: 14px;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+/* Color específico para cada botón */
+#admin-reservas-table .confirm-button {
+  background-color: #4CAF50; /* Verde para confirmar */
+}
+
+#admin-reservas-table .reject-button {
+  background-color: #f44336; /* Rojo para rechazar */
+}
+
+#admin-reservas-table .delete-button {
+  background-color: #ff0000; /* Gris para eliminar */
+}
+
+/* Hover effect para los botones */
+#admin-reservas-table .action-button:hover {
+  opacity: 0.9;
+}
+
+
+/* Notificación Modal */
+#admin-notificaciones-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+#admin-notificaciones-modal {
+  background: #ffffff;
+  width: 90%;
+  max-width: 400px;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  animation: fadeIn 0.3s ease-out;
+}
+
+#admin-notificaciones-modal h2 {
+  font-size: 20px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+#admin-notificaciones-modal p {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+/* Botones en la Modal */
+#admin-notificaciones-modal-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+#admin-notificaciones-button-confirm {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  color: white;
+  background-color: #4CAF50; /* Verde */
+  transition: background-color 0.3s;
+}
+
+#admin-notificaciones-button-cancel {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  color: white;
+  background-color: #f44336; /* Rojo */
+  transition: background-color 0.3s;
+}
+
+#admin-notificaciones-button-confirm:hover,
+#admin-notificaciones-button-cancel:hover {
+  opacity: 0.9;
+}
+
+/* Animación de entrada */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+
+
+/* Estilos para la ventana modal de edición en eventos */
+#admin-eventos-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+#admin-eventos-modal-content {
+  background: #ffffff;
+  width: 90%;
+  max-width: 600px;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  animation: fadeIn 0.3s ease-out;
+}
+
+#admin-eventos-modal-content h2 {
+  font-size: 24px;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+#admin-eventos-modal-content form {
+  display: flex;
+  flex-direction: column;
+}
+
+#admin-eventos-modal-content label {
+  margin-top: 10px;
+  font-size: 16px;
+  color: #555;
+}
+
+#admin-eventos-modal-content input[type="text"],
+#admin-eventos-modal-content input[type="date"],
+#admin-eventos-modal-content input[type="time"] {
+  margin-top: 5px;
+  padding: 10px;
+  font-size: 14px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+}
+
+#admin-eventos-modal-content button[type="submit"],
+#admin-eventos-modal-content button[type="button"] {
+  margin-top: 20px;
+  padding: 12px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#admin-eventos-modal-content button[type="submit"] {
+  background-color: #007bff;
+  color: white;
+  border: none;
+}
+
+#admin-eventos-modal-content button[type="button"] {
+  background-color: #f44336;
+  color: white;
+  border: none;
+}
+
+#admin-eventos-modal-content button:hover {
+  opacity: 0.9;
+}

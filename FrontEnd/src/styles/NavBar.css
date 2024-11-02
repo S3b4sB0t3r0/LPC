@@ -1,0 +1,95 @@
+:root {
+    --gris-oscuro: #1F1F1F;
+    --dorado-sutil: #C9B037;
+    --blanco-roto: #FAF9F6;
+    --crema-suave: #F8F8F8;
+    --fondo-logo: #FFFFFF; /* Fondo blanco para el logo */
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem 3rem; /* Aumentar el padding para una barra más grande */
+    background-color: var(--gris-oscuro);
+    color: var(--blanco-roto);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Sombra para resaltar la barra */
+}
+
+.logo-container {
+    display: flex;
+    align-items: center; /* Centra verticalmente el logo y el texto */
+}
+
+.logo {
+    height: 100px; /* Ajusta la altura según necesites */
+    margin-right: 10px; /* Espacio entre el logo y el texto */
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+}
+
+.nav-links a {
+    color: var(--blanco-roto);
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.2rem; /* Aumentar el tamaño de la fuente */
+}
+
+.nav-links a:hover {
+    color: var(--dorado-sutil);
+}
+
+.user-dropdown {
+    position: relative;
+}
+
+.user-icon {
+    cursor: pointer;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: var(--gris-oscuro);
+    border-radius: 5px;
+    padding: 0.5rem;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-menu a {
+    display: block;
+    color: var(--blanco-roto);
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.dropdown-menu a:hover {
+    background-color: var(--dorado-sutil);
+    color: var(--gris-oscuro);
+}
+
+.dropdown-menu button {
+    background-color: transparent; /* Fondo transparente */
+    color: var(--blanco-roto); /* Color del texto */
+    border: none; /* Sin borde */
+    padding: 0.5rem 1rem; /* Espaciado interno */
+    font-weight: bold; /* Negrita */
+    cursor: pointer; /* Cambiar el cursor al pasar el mouse */
+    transition: background-color 0.3s ease; /* Transición suave */
+}
+
+.dropdown-menu button:hover {
+    background-color: var(--dorado-sutil); /* Fondo al pasar el mouse */
+    color: var(--gris-oscuro); /* Cambiar color del texto al pasar el mouse */
+}
+.user-email {
+    color: var(--blanco-roto);
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+}

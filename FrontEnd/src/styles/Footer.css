@@ -1,0 +1,37 @@
+.footer {
+    background-color: var(--gris-oscuro);
+    color: var(--blanco-roto);
+    padding: 20px 0;
+    text-align: center;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-links {
+    list-style-type: none;
+    padding: 0;
+}
+
+.footer-links li {
+    display: inline;
+    margin: 0 15px;
+}
+
+.footer-links a {
+    color: var(--blanco-roto);
+    text-decoration: none;
+    transition: color 0.3s;
+    font-weight: bold;
+}
+
+.footer-links a:hover {
+    color: var(--dorado-sutil);
+}
+
+.footer p {
+    margin-top: 10px;
+    color: var(--blanco-roto);
+}

@@ -1,0 +1,109 @@
+/* Estilos para el formulario de restablecimiento */
+.restablecer-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-size: cover; /* Hace que la imagen cubra todo el contenedor */
+    background-position: center;
+    background-repeat: no-repeat;
+    color: rgb(0, 0, 0);
+    font-weight: bold;
+    padding: 40px; /* Añade un padding para mayor espacio */
+    font-family: Arial, sans-serif; /* Asegura la misma fuente */
+  }
+  
+
+  .restablecer-logo {
+    max-width: 150px; /* Ajusta el tamaño máximo del logo */
+    margin-bottom: 20px; /* Espacio debajo del logo */
+  }
+  
+  .restablecer-titulo {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    text-align: center; /* Centra el título */
+  }
+  
+  .restablecer-instrucciones {
+    font-size: 1rem;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+  
+  .restablecer-formulario {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 400px;
+    background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco con opacidad */
+    padding: 20px;
+    border-radius: 10px; /* Esquinas redondeadas */
+  }
+  
+  .restablecer-label {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    color: #000000;
+  }
+  
+  .restablecer-input {
+    padding: 1rem;
+    margin-bottom: 1rem;
+    background-color: #333; /* Fondo oscuro para el input */
+    border: 1px solid #fff;
+    color: #fff;
+    font-size: 1rem;
+  }
+  
+  .restablecer-boton {
+    padding: 1rem;
+    background-color: #000000;
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 20px; /* Añade espacio arriba del botón */
+  }
+  
+  .restablecer-boton:hover {
+    background-color: #f1c40f; /* Color de fondo al pasar el cursor */
+  }
+  
+  .restablecer-opcion {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    text-align: center; /* Centra las opciones */
+  }
+  
+  .restablecer-opcion a {
+    color: #000000;
+    text-decoration: underline;
+  }
+  
+  .notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    transition: opacity 0.5s ease-in-out;
+    z-index: 1000; /* Asegura que esté por encima de otros elementos */
+  }
+  
+  /* Estilo para el mensaje de éxito */
+  .notification[data-id="restablecer.success"] {
+    background-color: rgba(0, 128, 0, 0.9); /* Verde para éxito */
+    color: white;
+  }
+  
+  /* Estilo para el mensaje de error */
+  .notification[data-id="restablecer.error"] {
+    background-color: rgba(255, 0, 0, 0.9); /* Rojo para error */
+    color: white;
+  }
+  

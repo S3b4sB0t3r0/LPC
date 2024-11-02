@@ -1,0 +1,114 @@
+/* Contenedor principal del login */
+.login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centra horizontalmente */
+    justify-content: center; /* Centra verticalmente */
+    text-align: center;
+    color: rgb(0, 0, 0);
+    background-size: cover;
+    background-position: center;
+    padding: 40px;
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
+    font-weight: bold;
+  }
+  
+  .login-logo {
+    max-width: 200px; /* Aumenta el tamaño máximo del logo */
+    margin-bottom: 20px; /* Espacio debajo del logo */
+  }
+  
+  .login-container h2 {
+    font-size: 36px;
+    margin-bottom: 20px;
+    font-weight: bold;
+  }
+  
+  .login-container p {
+    font-size: 18px;
+    margin-bottom: 40px;
+    font-weight: bold;
+  }
+  
+  #login-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centra los elementos dentro del formulario */
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 400px;
+    width: 100%; /* Hace que el formulario ocupe el 100% del contenedor */
+  }
+  
+  #login-form input {
+    width: 100%; /* Mantiene el ancho completo del formulario */
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: none;
+    background-color: #333;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+  }
+  
+  #login-form button {
+    padding: 15px 30px;
+    background-color: #000000;
+    color: rgb(255, 255, 255);
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+  }
+  
+  #login-form button:hover {
+    background-color: #ffffff;
+    color: #000000;
+  }
+  
+  #login-form input::placeholder {
+    color: #bbb;
+    font-weight: bold;
+  }
+  
+  .login-container small {
+    display: block;
+    margin-top: 20px;
+    font-size: 14px;
+    color: #aaa;
+    font-weight: bold;
+  }
+  
+  .login-container a {
+    color: #000000;
+    text-decoration: underline;
+    font-weight: bold;
+  }
+  
+  .notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    transition: opacity 0.5s ease-in-out;
+    z-index: 1000;
+  }
+  
+  /* Estilo para el mensaje de éxito */
+  .notification[data-id="login.success"] {
+    background-color: rgba(0, 128, 0, 0.9);
+    color: white;
+  }
+  
+  /* Estilo para el mensaje de error */
+  .notification[data-id="login.error"] {
+    background-color: rgba(255, 0, 0, 0.9);
+    color: white;
+  }
+  

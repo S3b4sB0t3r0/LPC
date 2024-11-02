@@ -1,0 +1,103 @@
+.servicios-container {
+    padding: 40px;
+    background-color: #f4f4f4;
+    text-align: center;
+  }
+  
+  .servicios-title {
+    color: #333;
+    margin-bottom: 30px;
+  }
+  
+  .servicios-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  
+  .servicios-texto {
+    max-width: 400px;
+    padding: 20px;
+  }
+  
+  .servicios-imagen {
+    width: 360px; /* Tamaño aumentado en un 20% */
+    height: 360px; /* Tamaño aumentado en un 20% */
+    border-radius: 50%; /* Imagen redonda */
+    margin: 0 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .servicios-subtitle {
+    color: #000000;
+    margin-bottom: 15px;
+  }
+  
+  .servicios-button {
+    padding: 10px 15px;
+    background-color: #000000;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .servicios-button:hover {
+    background-color: #000000;
+  }
+  
+  /* Estilo para la sección de logística */
+  .logistica-container {
+    margin-top: 40px;
+    padding: 20px;
+    background-color: #e9ecef;
+    border-radius: 8px;
+  }
+  
+  .logistica-title {
+    color: #333;
+    margin-bottom: 30px;
+  }
+  
+  .logistica-items {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-bottom: 20px;
+  }
+  
+  .logistica-item {
+    text-align: center;
+    width: 360px; /* Aumento de ancho en un 20% */
+    margin: 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    transition: transform 0.3s;
+  }
+  
+  .logistica-imagen {
+    width: 100%; /* Se mantiene el 100% del contenedor */
+    border-radius: 10px;
+  }
+  
+  .logistica-item:hover {
+    transform: scale(1.05);
+  }
+  
+  .logistica-button {
+    padding: 10px 15px;
+    background-color: #000000;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .logistica-button:hover {
+    background-color: #000000;
+  }
+  

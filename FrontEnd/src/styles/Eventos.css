@@ -1,0 +1,185 @@
+.eventos-container {
+  text-align: center;
+  padding: 20px;
+  background-color: #f0f0f0;
+  min-height: 100vh;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 50px; /* Incrementa el margen inferior a 30px */
+  padding: 0 20px;
+}
+
+
+
+.eventos-container h2 {
+  font-size: 36px;
+  margin: 0;
+  color: #333;
+}
+
+.buscador {
+  padding: 10px;
+  width: 100%;
+  max-width: 300px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.eventos-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  padding: 0 20px;
+}
+
+.evento-card {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Sombra suavizada */
+  width: 250px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Añadido box-shadow */
+  cursor: pointer;
+}
+
+.evento-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Mejora en sombra al hover */
+}
+
+.evento-imagen {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.evento-card h3 {
+  margin: 15px 0;
+  color: #333;
+  font-size: 20px;
+}
+
+.evento-card p {
+  font-size: 16px;
+  color: #777;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 800px;
+  width: 100%;
+  position: relative;
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.modal-inner {
+  display: flex;
+  flex-direction: row;
+}
+
+.modal-imagen {
+  width: 300px;
+  height: 300px;
+  object-fit: cover;
+  margin-right: 20px;
+}
+
+.modal-info {
+  flex: 1;
+}
+
+.modal-content h2 {
+  margin-bottom: 10px;
+}
+
+.modal-content p {
+  font-size: 18px;
+  line-height: 1.5;
+}
+
+.comprar-boleta-btn {
+  background-color: #000000;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 20px;
+}
+
+.comprar-boleta-btn:hover {
+  background-color: #333;
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+  .evento-card {
+    width: 100%;
+  }
+
+  .modal-inner {
+    flex-direction: column;
+  }
+
+  .modal-imagen {
+    width: 100%;
+    height: auto;
+    margin-right: 0;
+  }
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.pagination-button {
+  background-color: #000000;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  margin: 0 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.pagination-button:hover {
+  background-color: #000000;
+}
+
+.pagination-button.active {
+  background-color: #000000;
+  font-weight: bold;
+}
+
