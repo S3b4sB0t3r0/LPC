@@ -42,19 +42,19 @@ function Login() {
           } else {
             navigate('/');
           }
-        }, 1000);
+        }, 3000);
       } else {
         setErrorMessage(result.message || 'Correo o contraseña incorrectos');
         setTimeout(() => {
           setErrorMessage('');
-        }, 1000);
+        }, 3000);
       }
     } catch (error) {
       console.error('Error en la solicitud:', error);
       setErrorMessage('Hubo un error al conectar con el servidor');
       setTimeout(() => {
         setErrorMessage('');
-      }, 1000);
+      }, 3000);
     }
   };
 

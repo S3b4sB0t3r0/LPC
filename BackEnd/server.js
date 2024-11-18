@@ -8,7 +8,8 @@ const {
   sendContactEmail,
   sendReservationEmail,
   conReservationEmail,
-  sendRejectionEmail
+  sendRejectionEmail,
+  sendRegistrationEmail
 } = require('./testEmail');  // Aquí se importan las funciones de envío de correo desde testEmail.js
 
 const app = express();
@@ -32,6 +33,7 @@ const userSchema = new mongoose.Schema({
   nombre: String,
   correo: String,
   contraseña: String,
+  estado: { type: Boolean, default: true },
 });
 
 // Esquema de reservas
@@ -95,40 +97,68 @@ app.get('/Usuarios', async (req, res) => {
 app.post('/Usuarios', async (req, res) => {
   const { nombre, correo, contraseña } = req.body;
 
+  // Verificar si el correo ya está registrado
   const userExists = await Usuario.findOne({ correo });
   if (userExists) {
     return res.status(400).json({ message: 'El correo ya está registrado' });
   }
 
+  // Validar que la contraseña tenga al menos 6 caracteres
   if (contraseña.length < 6) {
     return res.status(400).json({ message: 'La contraseña debe tener al menos 6 caracteres' });
   }
 
-  const hashedPassword = await bcrypt.hash(contraseña, 10);
-  const newUser = new Usuario({ nombre, correo, contraseña: hashedPassword });
-  await newUser.save();
+  try {
+    // Encriptar la contraseña antes de guardarla en la base de datos
+    const hashedPassword = await bcrypt.hash(contraseña, 10);
+    const newUser = new Usuario({ nombre, correo, contraseña: hashedPassword });
 
-  const token = jwt.sign({ id: newUser._id, nombre: newUser.nombre }, SECRET_KEY);
-  res.status(201).json({ message: 'Usuario registrado exitosamente', token });
+    // Guardar el nuevo usuario en la base de datos
+    await newUser.save();
+
+    // Crear un token de autenticación
+    const token = jwt.sign({ id: newUser._id, nombre: newUser.nombre }, SECRET_KEY);
+
+    // Enviar el correo de confirmación de registro
+    await sendRegistrationEmail(correo, nombre); // Llamada a la función para enviar el correo
+
+    // Responder con el mensaje de éxito
+    res.status(201).json({ message: 'Usuario registrado exitosamente', token });
+  } catch (error) {
+    console.error('Error al registrar el usuario:', error);
+    res.status(500).json({ message: 'Error al registrar el usuario.' });
+  }
 });
+
 
 // Ruta para iniciar sesión
 app.post('/login', async (req, res) => {
   const { correo, contraseña } = req.body;
 
+  // Buscar al usuario por correo
   const user = await Usuario.findOne({ correo });
   if (!user) {
     return res.status(400).json({ message: 'Correo o contraseña incorrectos' });
   }
 
+  // Verificar si el usuario está activo
+  if (!user.estado) {
+    return res.status(403).json({ message: 'Usuario inactivado, comuníquese con el soporte.' });
+  }
+
+  // Validar la contraseña
   const isPasswordValid = await bcrypt.compare(contraseña, user.contraseña);
   if (!isPasswordValid) {
     return res.status(400).json({ message: 'Correo o contraseña incorrectos' });
   }
 
+  // Generar token JWT
   const token = jwt.sign({ id: user._id, nombre: user.nombre }, SECRET_KEY);
+
+  // Responder con el token y la información del usuario
   res.status(200).json({ message: 'Inicio de sesión exitoso', token, nombre: user.nombre, correo: user.correo });
 });
+
 
 // Ruta para obtener información del usuario
 app.get('/user', (req, res) => {
@@ -152,9 +182,17 @@ app.get('/user', (req, res) => {
   });
 });
 
-// Ruta para realizar una reserva
 app.post('/reservas', async (req, res) => {
   const { nombre, email, fecha, hora, teatro, tipoEvento, duracion, imagenUrl } = req.body;
+
+  // Validar que la fecha de la reserva sea al menos 2 días en el futuro
+  const fechaReserva = new Date(`${fecha}T${hora}`);
+  const fechaActual = new Date();
+  const diferenciaDias = (fechaReserva - fechaActual) / (1000 * 60 * 60 * 24); // Diferencia en días
+
+  if (diferenciaDias < 2) {
+    return res.status(400).json({ message: 'La reserva debe realizarse al menos con 2 días de anticipación.' });
+  }
 
   const newReserva = new Reserva({
     nombre,
@@ -167,17 +205,17 @@ app.post('/reservas', async (req, res) => {
     imagenUrl,
   });
 
-  await newReserva.save();
-
   try {
-    // Incluye todos los parámetros necesarios para el correo de confirmación
-    await sendReservationEmail(email, nombre, teatro, fecha, hora); 
+    await newReserva.save();
+    // Enviar correo de confirmación
+    await sendReservationEmail(email, nombre, teatro, fecha, hora);
     res.status(201).json({ message: 'Reserva creada exitosamente', reserva: newReserva });
   } catch (error) {
     console.error('Error al enviar el correo de reserva:', error);
     res.status(500).json({ message: 'Reserva creada, pero hubo un problema enviando el correo.' });
   }
 });
+
 
 
 // Ruta para aprobar una reserva
@@ -351,6 +389,26 @@ app.get('/reservas/misReservas', async (req, res) => {
 
 
 // FrontEnd Admin 
+
+// Usuarios
+
+// Ruta para actualizar el estado de un usuario
+app.put('/usuarios/:id/estado', async (req, res) => {
+  const { id } = req.params;
+  const { estado } = req.body; // true o false
+
+  try {
+    const usuarioActualizado = await Usuario.findByIdAndUpdate(id, { estado }, { new: true });
+    if (!usuarioActualizado) {
+      return res.status(404).json({ message: 'Usuario no encontrado' });
+    }
+
+    res.json({ message: 'Estado del usuario actualizado exitosamente', usuario: usuarioActualizado });
+  } catch (error) {
+    res.status(500).json({ message: 'Error al actualizar el estado del usuario', error });
+  }
+});
+
 
 
 // Ruta para obtener solo el usuario y correo de todos los usuarios registrados

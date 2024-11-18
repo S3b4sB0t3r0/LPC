@@ -4,11 +4,16 @@ import '../styles/Teatros.css';
 function Teatros() {
   const [teatros, setTeatros] = useState([]);
   const [teatroSeleccionado, setTeatroSeleccionado] = useState(null);
+  const [busqueda, setBusqueda] = useState('');
+  const [paginaActual, setPaginaActual] = useState(1);
+  const teatrosPorPagina = 6;
+  const [usuarioAutenticado, setUsuarioAutenticado] = useState(false);  // Estado para verificar si el usuario está autenticado
 
   useEffect(() => {
+    // Cargar teatros
     const cargarTeatros = async () => {
       try {
-        const response = await fetch('http://localhost:4000/teatros'); // Cambiado a /teatros
+        const response = await fetch('http://localhost:4000/teatros');
         if (!response.ok) {
           throw new Error('Error al obtener los teatros');
         }
@@ -20,6 +25,15 @@ function Teatros() {
     };
 
     cargarTeatros();
+
+    // Verificar si el usuario está autenticado (simulación con un estado)
+    const verificarAutenticacion = () => {
+      // Simulación de autenticación. Deberías reemplazarlo con tu lógica real de autenticación.
+      const usuario = localStorage.getItem('usuario'); // Aquí asumimos que si hay un "usuario" en localStorage, el usuario está autenticado
+      setUsuarioAutenticado(!!usuario);  // Si el valor es nulo o vacío, el usuario no está autenticado
+    };
+
+    verificarAutenticacion();
   }, []);
 
   const abrirModal = (teatro) => {
@@ -30,17 +44,78 @@ function Teatros() {
     setTeatroSeleccionado(null);
   };
 
+  // Filtrar teatros por búsqueda
+  const teatrosFiltrados = teatros.filter(teatro =>
+    teatro.titulo.toLowerCase().includes(busqueda.toLowerCase())
+  );
+
+  // Lógica de paginación
+  const indexOfLastTeatro = paginaActual * teatrosPorPagina;
+  const indexOfFirstTeatro = indexOfLastTeatro - teatrosPorPagina;
+  const teatrosActuales = teatrosFiltrados.slice(indexOfFirstTeatro, indexOfLastTeatro);
+  const totalPaginas = Math.ceil(teatrosFiltrados.length / teatrosPorPagina);
+
+  const irANuevaPagina = (numeroPagina) => {
+    setPaginaActual(numeroPagina);
+  };
+
+  const handleReservar = () => {
+    if (teatroSeleccionado) {
+      // Aquí podrías agregar la lógica para la reserva, por ejemplo, redirigir a una página de pago o hacer una solicitud POST
+      alert(`Reserva realizada para el teatro: ${teatroSeleccionado.titulo}`);
+    }
+  };
+
   return (
     <div className="teatros-container">
-      <h2>Teatros Disponibles</h2>
+      <div className="header">
+        <h2>Teatros Disponibles</h2>
+        <input
+          type="text"
+          placeholder="Buscar teatros..."
+          value={busqueda}
+          onChange={(e) => setBusqueda(e.target.value)}
+          className="buscador"
+        />
+      </div>
       <div className="teatros-grid">
-        {teatros.map((teatro) => (
-          <div key={teatro._id} className="teatro-card" onClick={() => abrirModal(teatro)}>
-            <img src={teatro.imagen} alt={teatro.titulo} className="teatro-imagen" />
-            <h3>{teatro.titulo}</h3>
-          </div>
+        {teatrosActuales.length > 0 ? (
+          teatrosActuales.map((teatro) => (
+            <div key={teatro._id} className="teatro-card" onClick={() => abrirModal(teatro)}>
+              <img src={teatro.imagen} alt={teatro.titulo} className="teatro-imagen" />
+              <h3>{teatro.titulo}</h3>
+            </div>
+          ))
+        ) : (
+          <p>No hay teatros disponibles.</p>
+        )}
+      </div>
+
+      {/* Controles de paginación */}
+      <div className="pagination">
+        {Array.from({ length: totalPaginas }, (_, index) => (
+          <button
+            key={index + 1}
+            onClick={() => irANuevaPagina(index + 1)}
+            className={`pagination-button ${paginaActual === index + 1 ? 'active' : ''}`}
+          >
+            {index + 1}
+          </button>
         ))}
       </div>
+
+      {/* Botón de reserva, solo si el usuario está autenticado */}
+      {usuarioAutenticado && teatroSeleccionado && (
+        <div className="reservar-btn-container">
+          <button
+            id="teatros.button.reserva"
+            className="reservar-btn"
+            onClick={handleReservar}
+          >
+            Reservar
+          </button>
+        </div>
+      )}
 
       {/* Modal */}
       {teatroSeleccionado && (

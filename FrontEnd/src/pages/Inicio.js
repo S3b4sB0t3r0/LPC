@@ -105,6 +105,18 @@ function Inicio() {
       img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSi5bXa2nLIKJGJwiEnLFoDzZINwWOkoGaxCA&s',
       alt: 'Cliente 5'
     },
+    {
+      img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZT_OXqhOEKJlm1DS_dUPFL4vpw0xTK-Z0rQ&s',
+      alt: 'Cliente 6'
+    },
+    {
+      img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvpYn1dRb8SqAegJ_xzSqHT2ns56h4fWI6fw&s',
+      alt: 'Cliente 7'
+    },
+    {
+      img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRawz0QclAaCgkoS-KxkT0vYP0xUvUM1I0R7Q&s',
+      alt: 'Cliente 8'
+    }
   ];
 
   const handleClick = (link) => {

@@ -16,14 +16,18 @@ function Reservas() {
   const [duracion, setDuracion] = useState('');
   const [imagenUrl, setImagenUrl] = useState('');
   const [mensaje, setMensaje] = useState('');
-  const [tipoMensaje, setTipoMensaje] = useState(''); // 'success' o 'error'
+  const [tipoMensaje, setTipoMensaje] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     const now = new Date();
     const fechaSeleccionada = new Date(`${fecha}T${hora}`);
-    if (fechaSeleccionada < now) {
-      mostrarNotificacion('La fecha y hora deben ser futuras.', 'error');
+    const diferenciaDias = (fechaSeleccionada - now) / (1000 * 60 * 60 * 24);
+
+    // Validar fecha futura y con al menos 2 días de anticipación
+    if (diferenciaDias < 2) {
+      mostrarNotificacion('La reserva debe realizarse al menos con 2 días de anticipación.', 'error');
       return;
     }
 
@@ -34,10 +38,10 @@ function Reservas() {
       fecha,
       hora,
       teatro,
-      tipoEvento,
+      tipoEvento: tipoEvento === 'Otro' ? otroEvento : tipoEvento,
       duracion,
       imagenUrl,
-      estado: null, 
+      estado: null,
     };
 
     try {
@@ -56,11 +60,10 @@ function Reservas() {
 
       const data = await response.json();
       mostrarNotificacion('Reserva realizada con éxito!', 'success');
-      
-      // Redirigir después de mostrar la notificación
+
       setTimeout(() => {
         navigate('/');
-      }, 1000); // Espera 5 segundos antes de redirigir
+      }, 1000);
     } catch (error) {
       console.error('Error al realizar la reserva:', error);
       mostrarNotificacion('Hubo un error al realizar la reserva. Intenta nuevamente.', 'error');
@@ -73,8 +76,9 @@ function Reservas() {
     setTimeout(() => {
       setMensaje('');
       setTipoMensaje('');
-    }, 1000); // Duración de 5 segundos
+    }, 5000);
   };
+
 
   return (
     <div className="reservas-page" id="reservas-page">
@@ -175,6 +179,9 @@ function Reservas() {
                   <option value="Teatro Delia">Teatro Delia</option>
                   <option value="Teatro Nacional">Teatro Nacional</option>
                   <option value="Teatro Lozano">Teatro Lozano</option>
+                  <option value="Teatro La Candelaria">Teatro La Candelaria</option>
+                  <option value="Teatro Jorge Eliécer Gaitán">Teatro Jorge Eliécer Gaitán</option>
+                  <option value="Teatro Cafam">Teatro Cafam</option>
                 </select>
               </div>
 

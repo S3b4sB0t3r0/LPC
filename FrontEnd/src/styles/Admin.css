@@ -640,3 +640,14 @@ button:hover {
 #admin-eventos-modal-content button:hover {
   opacity: 0.9;
 }
+
+
+.activate-button {
+  background-color: green;
+  color: white;
+}
+
+.deactivate-button {
+  background-color: red;
+  color: white;
+}

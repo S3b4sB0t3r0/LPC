@@ -436,6 +436,41 @@ const eliminarReserva = async (id) => {
 
 
 
+  // Usuarios 
+
+  const cambiarEstadoUsuario = async (id, estadoActual) => {
+    try {
+      const nuevoEstado = !estadoActual;
+      const response = await fetch(`${backendUrl}/usuarios/${id}/estado`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ estado: nuevoEstado }),
+      });
+  
+      if (!response.ok) {
+        throw new Error('Error al cambiar el estado del usuario');
+      }
+  
+      const usuarioActualizado = await response.json();
+      setUsuarios((prevUsuarios) =>
+        prevUsuarios.map((usuario) =>
+          usuario._id === id ? { ...usuario, estado: usuarioActualizado.usuario.estado } : usuario
+        )
+      );
+  
+      showNotification(
+        `Usuario ${nuevoEstado ? 'activado' : 'desactivado'} exitosamente`,
+        'success'
+      );
+    } catch (error) {
+      console.error(error);
+      showNotification('Error al cambiar el estado del usuario', 'error');
+    }
+  };
+  
+
 
 
 
@@ -501,16 +536,27 @@ const eliminarReserva = async (id) => {
                 <tr>
                   <th>Nombre</th>
                   <th>Correo</th>
+                  <th>Estado</th>
+                  <th>Acciones</th>
                 </tr>
               </thead>
               <tbody>
-                {filterData(usuarios, ['nombre', 'correo'], searchQueryUsuarios).map(usuario => (
-                  <tr key={usuario._id}>
-                    <td>{usuario.nombre}</td>
-                    <td>{usuario.correo}</td>
-                  </tr>
-                ))}
-              </tbody>
+              {filterData(usuarios, ['nombre', 'correo'], searchQueryUsuarios).map((usuario) => (
+                <tr key={usuario._id}>
+                  <td>{usuario.nombre}</td>
+                  <td>{usuario.correo}</td>
+                  <td>{usuario.estado ? 'Activo' : 'Inactivo'}</td>
+                  <td>
+                    <button
+                      className={`action-button ${usuario.estado ? 'deactivate-button' : 'activate-button'}`}
+                      onClick={() => cambiarEstadoUsuario(usuario._id, usuario.estado)}
+                    >
+                      {usuario.estado ? 'Desactivar' : 'Activar'}
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
             </table>
           </section>
         )}

@@ -8,6 +8,84 @@ const transporter = nodemailer.createTransport({
   },
 });
 
+// Correo de Registro
+const sendRegistrationEmail = async (email, nombre) => {
+    try {
+      const mailOptions = {
+        from: 'logisticacolombianalpc@gmail.com',
+        to: email,
+        subject: '¡Registro Exitoso! Bienvenido a Gestión Logística Colombiana',
+        html: `
+        <!DOCTYPE html>
+        <html lang="es">
+        <head>
+            <meta charset="UTF-8">
+            <style>
+                body {
+                    font-family: Arial, sans-serif;
+                    background-color: #f4f4f4;
+                    margin: 0;
+                    padding: 0;
+                }
+                .container {
+                    max-width: 600px;
+                    margin: 0 auto;
+                    background-color: #ffffff;
+                    border: 1px solid #ddd;
+                    border-radius: 8px;
+                    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+                }
+                .header {
+                    background-color: #333333;
+                    color: #ffffff;
+                    padding: 20px;
+                    text-align: center;
+                    font-size: 24px;
+                    font-weight: bold;
+                }
+                .content {
+                    padding: 20px;
+                    color: #333333;
+                }
+                .footer {
+                    text-align: center;
+                    padding: 15px;
+                    font-size: 12px;
+                    color: #777777;
+                    background-color: #f4f4f4;
+                    border-top: 1px solid #ddd;
+                }
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <div class="header">Gestión Logística Colombiana</div>
+                <div class="content">
+                    <p>¡Hola ${nombre}!</p>
+                    <p>Nos complace informarte que tu registro ha sido exitoso. Ahora formas parte de nuestra comunidad en Gestión Logística Colombiana.</p>
+                    <p>A partir de ahora, tendrás acceso a nuestros servicios y estarás al tanto de todas nuestras actualizaciones y promociones.</p>
+                    <p>En nuestra plataforma podrás gestionar tus envíos, obtener cotizaciones, y recibir soporte personalizado.</p>
+                    <p>Si tienes alguna pregunta o necesitas ayuda, no dudes en contactarnos. Nuestro equipo está siempre disponible para asistirte.</p>
+                    <p>¡Gracias por confiar en nosotros!</p>
+                    <p>Saludos cordiales,<br>El equipo de Gestión Logística Colombiana</p>
+                </div>
+                <div class="footer">
+                    © 2024 Gestión Logística Colombiana. Todos los derechos reservados.
+                </div>
+            </div>
+        </body>
+        </html>
+        `,
+      };
+      await transporter.sendMail(mailOptions);
+      console.log('Correo de registro enviado exitosamente');
+    } catch (error) {
+      console.error('Error al enviar el correo de registro:', error);
+      throw new Error('Error al enviar el correo');
+    }
+  };
+  
+
 // Correo de contacto
 const sendContactEmail = async (email, nombre, mensaje) => {
     try {
@@ -400,4 +478,5 @@ module.exports = {
   sendResetEmail,
   conReservationEmail,
   sendRejectionEmail,
+  sendRegistrationEmail
 };
