@@ -16,7 +16,7 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validación básica
+    // Validación básica de los campos
     if (!email || !password) {
       setMessage('Por favor completa todos los campos');
       setMessageType('warning');
@@ -26,7 +26,6 @@ function Login() {
     try {
       const API_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:4000';
       console.log("API URL:", API_URL);
-      // Asegúrate de que esté configurado
 
       // Realizar la solicitud al backend para login
       const response = await fetch(`${API_URL}/login`, {

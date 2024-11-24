@@ -26,8 +26,7 @@ const SECRET_KEY = 'tu_clave_secreta_para_JWT'; // Cambia esto por una clave má
 
 // Lista de dominios permitidos (incluyendo Vercel y localhost para desarrollo)
 const allowedOrigins = [
-  'https://lpc-colombia-4akcaffeb-sebaspro22210-gmailcoms-projects.vercel.app',  // Dominio de Vercel
-  'http://localhost:3000', // Para desarrollo local
+  'https://lpc-colombia-lftpm1xrx-sebaspro22210-gmailcoms-projects.vercel.app/'
 ];
 
 const corsOptions = {
