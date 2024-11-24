@@ -24,7 +24,9 @@ function Login() {
     }
 
     try {
-      const API_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:4000'; // Asegúrate de que esté configurado
+      const API_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:4000';
+      console.log("API URL:", API_URL);
+      // Asegúrate de que esté configurado
 
       // Realizar la solicitud al backend para login
       const response = await fetch(`${API_URL}/login`, {
