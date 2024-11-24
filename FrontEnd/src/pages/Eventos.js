@@ -8,25 +8,30 @@ function Eventos() {
   const [paginaActual, setPaginaActual] = useState(1);
   const eventosPorPagina = 6;
 
+  // Usa la variable de entorno para la URL del backend
+  const API_URL = process.env.REACT_APP_BACKEND_URL;
+
   useEffect(() => {
     const cargarEventos = async () => {
       try {
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/eventos`);
+        const response = await fetch(`${API_URL}/eventos`);
         if (!response.ok) {
           throw new Error('Error al obtener los eventos');
         }
         const data = await response.json();
+        // Asegúrate de que 'estado' es un booleano
         const eventosConDisponibilidad = data.map(evento => ({
           ...evento,
-          disponible: evento.estado,
+          disponible: evento.estado, // Asegúrate de que esto se alinee con tu esquema
         }));
         setEventos(eventosConDisponibilidad);
       } catch (error) {
         console.error('Error al cargar los eventos:', error);
       }
     };
+    
     cargarEventos();
-  }, []);
+  }, [API_URL]);
 
   const abrirModal = (evento) => {
     setEventoSeleccionado(evento);
@@ -40,7 +45,7 @@ function Eventos() {
     if (eventoSeleccionado) {
       try {
         // Actualizar el estado del evento a no disponible
-        await fetch(`http://localhost:4000/api/eventos/${eventoSeleccionado._id}`, {
+        await fetch(`${API_URL}/api/eventos/${eventoSeleccionado._id}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
