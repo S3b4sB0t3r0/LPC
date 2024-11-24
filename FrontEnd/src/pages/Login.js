@@ -15,8 +15,11 @@ function Login() {
 
     try {
       // Usa la variable de entorno para la URL de la API
-      const API_URL = process.env.REACT_APP_API_URL; // Verifica que esta URL esté bien definida
+      const API_URL = process.env.REACT_APP_API_URL; // Esto obtiene la URL del backend desde la variable de entorno
 
+      if (!API_URL) {
+        console.error("La variable de entorno REACT_APP_API_URL no está configurada correctamente.");
+      }
 
       const response = await fetch(`${API_URL}/login`, {
         method: 'POST',
