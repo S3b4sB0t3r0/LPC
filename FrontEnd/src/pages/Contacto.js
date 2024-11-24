@@ -22,7 +22,10 @@ function Contacto() {
       return;
     }
 
-    fetch('http://localhost:4000/contacto', {
+    // Usa la variable de entorno para la URL del backend
+    const API_URL = process.env.REACT_APP_BACKEND_URL;
+
+    fetch(`${API_URL}/contacto`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
