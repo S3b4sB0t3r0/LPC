@@ -2,68 +2,68 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/Login.css';
 import logo from '../image/logo/9.png'; // Asegúrate de que esta ruta sea correcta
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
 function Login() {
-  const [errorMessage, setErrorMessage] = useState('');
-  const [successMessage, setSuccessMessage] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [message, setMessage] = useState('');
+  const [messageType, setMessageType] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const formData = new FormData(e.target);
-    const data = Object.fromEntries(formData);
+
+    // Validación (si es necesario)
+    if (!email || !password) {
+      setMessage('Por favor completa todos los campos');
+      setMessageType('warning');
+      return;
+    }
 
     try {
-      // Usa la variable de entorno para la URL del backend
       const API_URL = process.env.REACT_APP_BACKEND_URL;
 
-      if (!API_URL) {
-        console.error("La variable de entorno REACT_APP_BACKEND_URL no está configurada correctamente.");
-      }
-
+      // Realizar la solicitud al backend para login
       const response = await fetch(`${API_URL}/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          correo: data.email,
-          contraseña: data.password,
-        }),
+        body: JSON.stringify({ correo: email, contraseña: password }),
       });
 
       const result = await response.json();
 
       if (response.ok) {
-        const token = result.token; // Guarda el token
-        localStorage.setItem('token', token);
+        // Guarda el token y los datos del usuario en localStorage
+        localStorage.setItem('token', result.token);
+        localStorage.setItem('user', JSON.stringify({ nombre: result.nombre, correo: email }));
 
-        localStorage.setItem('user', JSON.stringify({
-          nombre: result.nombre,
-          correo: data.email,
-        }));
-
-        setSuccessMessage('Inicio de sesión exitoso. Redirigiendo...');
+        setMessage('Inicio de sesión exitoso. Redirigiendo...');
+        setMessageType('success');
         setTimeout(() => {
-          setSuccessMessage('');
-          if (data.email === 'Sebas@GLC.com') {
-            navigate('/admin');
+          setMessage('');
+          if (result.role === 'admin') {
+            navigate('/admin'); // Redirige al admin si el rol es admin
           } else {
-            navigate('/');
+            navigate('/'); // Redirige al usuario normal
           }
-        }, 3000);
+        }, 2000);
       } else {
-        setErrorMessage(result.message || 'Correo o contraseña incorrectos');
-        setTimeout(() => {
-          setErrorMessage('');
-        }, 3000);
+        setMessage(result.message || 'Correo o contraseña incorrectos');
+        setMessageType('error');
       }
     } catch (error) {
-      console.error('Error en la solicitud:', error);
-      setErrorMessage('Hubo un error al conectar con el servidor');
-      setTimeout(() => {
-        setErrorMessage('');
-      }, 3000);
+      console.error('Error:', error);
+      setMessage('Hubo un error al conectar con el servidor');
+      setMessageType('error');
     }
+
+    setTimeout(() => {
+      setMessage('');
+      setMessageType('');
+    }, 3000);
   };
 
   return (
@@ -76,41 +76,44 @@ function Login() {
 
       <form id="login-form" onSubmit={handleSubmit}>
         <label htmlFor="email">Correo electrónico</label>
-        <input type="email" name="email" id="email" placeholder="Correo electrónico*" required />
-
+        <input 
+          type="email" 
+          name="email" 
+          id="email" 
+          placeholder="Correo electrónico*" 
+          value={email} 
+          onChange={(e) => setEmail(e.target.value)} 
+          required 
+        />
+        
         <label htmlFor="password">Contraseña</label>
         <div className="password-container">
-          <input
-            type={showPassword ? 'text' : 'password'}
-            name="password"
-            id="password"
-            placeholder="Contraseña"
-            required
+          <input 
+            type={showPassword ? 'text' : 'password'} 
+            name="password" 
+            id="password" 
+            placeholder="Contraseña" 
+            value={password} 
+            onChange={(e) => setPassword(e.target.value)} 
+            required 
           />
-          <button type="button" onClick={() => setShowPassword(!showPassword)}>
-            {showPassword ? 'Ocultar' : 'Mostrar'}
-          </button>
+          <FontAwesomeIcon 
+            icon={showPassword ? faEyeSlash : faEye} 
+            className="toggle-password" 
+            onClick={() => setShowPassword(!showPassword)} 
+          />
         </div>
-
+        
         <br />
         <button type="submit">INICIAR SESIÓN</button>
       </form>
 
-      {errorMessage && (
-        <div className="notification error" data-id="login.error" aria-live="assertive">
-          {errorMessage}
+      {message && (
+        <div className={`notification ${messageType}`} data-id={`login.${messageType}`}>
+          {message}
         </div>
       )}
-
-      {successMessage && (
-        <div className="notification success" data-id="login.success" aria-live="polite">
-          {successMessage}
-        </div>
-      )}
-
-      <small>
-        ¿Olvidaste tu Contraseña? <a href="/restablecer">Ingresa Aquí</a>
-      </small>
+      <small>¿Olvidaste tu Contraseña? <a href="/restablecer">Ingresa Aquí</a></small>
     </div>
   );
 }
