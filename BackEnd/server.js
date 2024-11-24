@@ -25,7 +25,7 @@ const SECRET_KEY = 'tu_clave_secreta_para_JWT'; // Cambia esto por una clave má
 
 
 // Configurar CORS para permitir tu dominio de Vercel
-const cors = require('cors');
+
 
 const corsOptions = {
   origin: (origin, callback) => {
