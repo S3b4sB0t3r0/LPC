@@ -91,7 +91,6 @@ function Teatros() {
             <div key={teatro._id} className="teatro-card" onClick={() => abrirModal(teatro)}>
               <img src={teatro.imagen} alt={teatro.titulo} className="teatro-imagen" />
               <h3>{teatro.titulo}</h3>
-              <p>{teatro.disponible ? 'Disponible' : 'No Disponible'}</p>
             </div>
           ))
         ) : (
@@ -112,24 +111,23 @@ function Teatros() {
         ))}
       </div>
 
+      {/* Modal */}
       {teatroSeleccionado && (
         <div className="modal-overlay" onClick={cerrarModal}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <span className="close-button" onClick={cerrarModal}>&times;</span>
-            <div className="modal-inner">
-              <img src={teatroSeleccionado.imagen} alt={teatroSeleccionado.titulo} className="modal-imagen" />
+            <div className="modal-body">
               <div className="modal-info">
                 <h2>{teatroSeleccionado.titulo}</h2>
-                <p>{teatroSeleccionado.descripcion}</p>
+                <p><strong>Descripción:</strong> {teatroSeleccionado.descripcion}</p>
                 <p><strong>Capacidad:</strong> {teatroSeleccionado.capacidad}</p>
                 <p><strong>Teléfono:</strong> {teatroSeleccionado.telefono}</p>
-                <p><strong>Estado:</strong> {teatroSeleccionado.disponible ? 'Disponible' : 'No Disponible'}</p>
-                {teatroSeleccionado.disponible && (
-                  <button className="reservar-btn" onClick={handleReservar}>
-                    Reservar
-                  </button>
-                )}
+                <div>
+                  <strong>Ubicación:</strong>
+                  <div dangerouslySetInnerHTML={{ __html: teatroSeleccionado.mapa }} />
+                </div>
               </div>
+              <img src={teatroSeleccionado.imagen} alt={teatroSeleccionado.titulo} className="modal-imagen" />
             </div>
           </div>
         </div>
