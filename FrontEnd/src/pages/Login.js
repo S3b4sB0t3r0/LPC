@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/Login.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import logo from '../image/logo/9.png'; // Asegúrate de que esta ruta sea correcta
 
 function Login() {
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -15,7 +18,7 @@ function Login() {
 
     try {
       // Usa la variable de entorno para la URL de la API
-      const API_URL = process.env.REACT_APP_API_URL; // Esto obtiene la URL del backend desde la variable de entorno
+      const API_URL = process.env.REACT_APP_API_URL;
 
       if (!API_URL) {
         console.error("La variable de entorno REACT_APP_API_URL no está configurada correctamente.");
@@ -72,29 +75,46 @@ function Login() {
         <h2>Iniciar Sesión</h2>
         <p>Accede a tu cuenta para continuar</p>
       </header>
-      
+
       <form id="login-form" onSubmit={handleSubmit}>
         <label htmlFor="email">Correo electrónico</label>
         <input type="email" name="email" id="email" placeholder="Correo electrónico*" required />
-        
+
         <label htmlFor="password">Contraseña</label>
-        <input type="password" name="password" id="password" placeholder="Contraseña" required />
-        
+        <div className="password-container">
+          <input
+            type={showPassword ? 'text' : 'password'}
+            name="password"
+            id="password"
+            placeholder="Contraseña"
+            required
+          />
+          <FontAwesomeIcon
+            icon={showPassword ? faEyeSlash : faEye}
+            className="toggle-password"
+            onClick={() => setShowPassword(!showPassword)}
+          />
+        </div>
+
         <br />
         <button type="submit">INICIAR SESIÓN</button>
       </form>
 
       {errorMessage && (
-        <div className="notification error" data-id="login.error">
+        <div className="notification error" data-id="login.error" aria-live="assertive">
           {errorMessage}
         </div>
       )}
+
       {successMessage && (
-        <div className="notification success" data-id="login.success">
+        <div className="notification success" data-id="login.success" aria-live="polite">
           {successMessage}
         </div>
       )}
-      <small>¿Olvidaste tu Contraseña? <a href="/restablecer">Ingresa Aquí</a></small>
+
+      <small>
+        ¿Olvidaste tu Contraseña? <a href="/restablecer">Ingresa Aquí</a>
+      </small>
     </div>
   );
 }
