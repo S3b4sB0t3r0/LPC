@@ -22,6 +22,7 @@ function Login() {
 
       if (!API_URL) {
         console.error("La variable de entorno REACT_APP_API_URL no está configurada correctamente.");
+        return;
       }
 
       const response = await fetch(`${API_URL}/login`, {
