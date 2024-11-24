@@ -20,7 +20,20 @@ const PORT = 4000;
 app.use(cors());
 app.use(express.json());
 
+
 const SECRET_KEY = process.env.SECRET_KEY;
+
+// Middleware para proteger rutas que requieren autenticación
+const authenticateToken = (req, res, next) => {
+  const token = req.header('Authorization')?.split(' ')[1]; // Asumiendo el formato 'Bearer <token>'
+  if (!token) return res.status(401).json({ message: 'Token no proporcionado' });
+
+  jwt.verify(token, SECRET_KEY, (err, user) => {
+    if (err) return res.status(403).json({ message: 'Token inválido' });
+    req.user = user;
+    next();
+  });
+};
 
 
 
@@ -32,7 +45,6 @@ const allowedOrigins = [
 
 const corsOptions = {
   origin: (origin, callback) => {
-    // Permitir orígenes de la lista de orígenes permitidos
     if (allowedOrigins.includes(origin) || !origin) {
       callback(null, true);
     } else {
@@ -40,10 +52,9 @@ const corsOptions = {
     }
   },
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  credentials: true, // Si estás usando cookies o autenticación por sesión, debe ser true
+  credentials: true,
 };
 
-// Aplicar CORS a todas las rutas
 app.use(cors(corsOptions));
 
 
@@ -172,34 +183,31 @@ app.post('/Usuarios', async (req, res) => {
 app.post('/login', async (req, res) => {
   const { correo, contraseña } = req.body;
 
-  // Verificar si se envió el correo y la contraseña
+  // Verificar que los campos no estén vacíos
   if (!correo || !contraseña) {
-    return res.status(400).json({ message: 'Correo y contraseña son requeridos.' });
+    return res.status(400).json({ message: 'Correo y contraseña son requeridos' });
   }
 
-  // Buscar al usuario por correo
   const user = await Usuario.findOne({ correo });
   if (!user) {
-    return res.status(401).json({ message: 'Correo o contraseña incorrectos' }); // Cambiar de 400 a 401
+    return res.status(400).json({ message: 'Correo o contraseña incorrectos' });
   }
 
-  // Verificar si el usuario está activo
-  if (!user.estado) {
-    return res.status(403).json({ message: 'Usuario inactivado, comuníquese con el soporte.' });
-  }
-
-  // Validar la contraseña
   const isPasswordValid = await bcrypt.compare(contraseña, user.contraseña);
   if (!isPasswordValid) {
-    return res.status(401).json({ message: 'Correo o contraseña incorrectos' }); // Cambiar de 400 a 401
+    return res.status(400).json({ message: 'Correo o contraseña incorrectos' });
   }
 
-  // Generar token JWT
-  const token = jwt.sign({ id: user._id, nombre: user.nombre }, SECRET_KEY);
+  const token = jwt.sign({ id: user._id, nombre: user.nombre }, process.env.SECRET_KEY);
 
-  // Responder con el token y la información del usuario
-  res.status(200).json({ message: 'Inicio de sesión exitoso', token, nombre: user.nombre, correo: user.correo });
+  return res.status(200).json({
+    message: 'Inicio de sesión exitoso',
+    token,
+    nombre: user.nombre,
+    correo: user.correo,
+  });
 });
+
 
 
 

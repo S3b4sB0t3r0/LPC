@@ -15,25 +15,25 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     // Validación básica
     if (!email || !password) {
       setMessage('Por favor completa todos los campos');
       setMessageType('warning');
       return;
     }
-
+  
     try {
       const API_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:4000';
       console.log("API URL:", API_URL);
-
+  
       // Realizar la solicitud al backend para login
       const response = await fetch(`${API_URL}/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ correo: email, contraseña: password }),
       });
-
+  
       // Verificar si la respuesta es válida
       if (!response.ok) {
         const result = await response.json();
@@ -41,39 +41,39 @@ function Login() {
         setMessageType('error');
         return;
       }
-
+  
       const result = await response.json();
-      if (!result.token) {
-        setMessage('Error al recibir el token de autenticación.');
-        setMessageType('error');
-        return;
-      }
-
+  
       // Guarda el token y los datos del usuario en localStorage
       localStorage.setItem('token', result.token);
       localStorage.setItem('user', JSON.stringify({ nombre: result.nombre, correo: email }));
-
+  
       setMessage('Inicio de sesión exitoso. Redirigiendo...');
       setMessageType('success');
-
+  
       // Redirigir dependiendo del rol del usuario
       setTimeout(() => {
         setMessage('');
-        navigate('/'); // Redirige al usuario normal
+        if (result.role === 'admin') {
+          navigate('/admin'); // Redirige al admin si el rol es admin
+        } else {
+          navigate('/'); // Redirige al usuario normal
+        }
       }, 2000);
-
+  
     } catch (error) {
       console.error('Error en la solicitud:', error);
       setMessage('Hubo un error al conectar con el servidor');
       setMessageType('error');
     }
-
+  
     // Limpiar mensaje después de 3 segundos
     setTimeout(() => {
       setMessage('');
       setMessageType('');
     }, 3000);
   };
+  
 
   return (
     <div className="login-container">
