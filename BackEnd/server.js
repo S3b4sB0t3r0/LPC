@@ -20,7 +20,8 @@ const PORT = 4000;
 app.use(cors());
 app.use(express.json());
 
-const SECRET_KEY = 'tu_clave_secreta_para_JWT'; // Cambia esto por una clave más segura en producción
+const SECRET_KEY = process.env.SECRET_KEY;
+
 
 
 
@@ -171,10 +172,15 @@ app.post('/Usuarios', async (req, res) => {
 app.post('/login', async (req, res) => {
   const { correo, contraseña } = req.body;
 
+  // Verificar si se envió el correo y la contraseña
+  if (!correo || !contraseña) {
+    return res.status(400).json({ message: 'Correo y contraseña son requeridos.' });
+  }
+
   // Buscar al usuario por correo
   const user = await Usuario.findOne({ correo });
   if (!user) {
-    return res.status(400).json({ message: 'Correo o contraseña incorrectos' });
+    return res.status(401).json({ message: 'Correo o contraseña incorrectos' }); // Cambiar de 400 a 401
   }
 
   // Verificar si el usuario está activo
@@ -185,7 +191,7 @@ app.post('/login', async (req, res) => {
   // Validar la contraseña
   const isPasswordValid = await bcrypt.compare(contraseña, user.contraseña);
   if (!isPasswordValid) {
-    return res.status(400).json({ message: 'Correo o contraseña incorrectos' });
+    return res.status(401).json({ message: 'Correo o contraseña incorrectos' }); // Cambiar de 400 a 401
   }
 
   // Generar token JWT
@@ -194,6 +200,7 @@ app.post('/login', async (req, res) => {
   // Responder con el token y la información del usuario
   res.status(200).json({ message: 'Inicio de sesión exitoso', token, nombre: user.nombre, correo: user.correo });
 });
+
 
 
 // Ruta para obtener información del usuario

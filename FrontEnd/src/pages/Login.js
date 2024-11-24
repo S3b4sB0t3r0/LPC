@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/Login.css';
-import logo from '../image/logo/9.png'; // Asegúrate de que esta ruta sea correcta
+import logo from '../image/logo/9.png'; 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
@@ -16,7 +16,7 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validación básica de los campos
+    // Validación básica
     if (!email || !password) {
       setMessage('Por favor completa todos los campos');
       setMessageType('warning');
@@ -43,6 +43,11 @@ function Login() {
       }
 
       const result = await response.json();
+      if (!result.token) {
+        setMessage('Error al recibir el token de autenticación.');
+        setMessageType('error');
+        return;
+      }
 
       // Guarda el token y los datos del usuario en localStorage
       localStorage.setItem('token', result.token);
@@ -54,11 +59,7 @@ function Login() {
       // Redirigir dependiendo del rol del usuario
       setTimeout(() => {
         setMessage('');
-        if (result.role === 'admin') {
-          navigate('/admin'); // Redirige al admin si el rol es admin
-        } else {
-          navigate('/'); // Redirige al usuario normal
-        }
+        navigate('/'); // Redirige al usuario normal
       }, 2000);
 
     } catch (error) {
