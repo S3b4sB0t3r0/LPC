@@ -18,13 +18,16 @@ function Teatros() {
         if (!response.ok) {
           throw new Error('Error al obtener los teatros');
         }
+    
+        // Verificar que la respuesta sea JSON antes de procesarla
         const data = await response.json();
         setTeatros(data);
       } catch (error) {
-        setError('Hubo un error al cargar los teatros.');
         console.error('Error al cargar los teatros:', error);
+        setError('Hubo un error al cargar los teatros.');
       }
     };
+    
 
     cargarTeatros();
 
