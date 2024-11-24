@@ -25,24 +25,11 @@ const SECRET_KEY = 'tu_clave_secreta_para_JWT'; // Cambia esto por una clave má
 
 
 // Configurar CORS para permitir tu dominio de Vercel
-const allowedOrigins = [
-  'https://lpc-colombia-o382cft2m-sebaspro22210-gmailcoms-projects.vercel.app',
-  'https://lpc-colombia-a2i4441pa-sebaspro22210-gmailcoms-projects.vercel.app',
-  'https://lpc-colombia-nxsnu8bu9-sebaspro22210-gmailcoms-projects.vercel.app/',
-];
-
 app.use(cors({
-  origin: function (origin, callback) {
-    if (allowedOrigins.includes(origin) || !origin) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
+  origin: '*', // Permite cualquier origen
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  credentials: true, // Si usas cookies o autenticación
+  credentials: true, // Opcional si necesitas autenticación
 }));
-
 
 
 
