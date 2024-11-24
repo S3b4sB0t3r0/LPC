@@ -14,7 +14,10 @@ function Login() {
     const data = Object.fromEntries(formData);
 
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/login`, {
+      // Usa la variable de entorno para la URL de la API
+      const API_URL = process.env.REACT_APP_API_URL;
+
+      const response = await fetch(`${API_URL}/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
