@@ -25,7 +25,7 @@ const SECRET_KEY = 'tu_clave_secreta_para_JWT'; // Cambia esto por una clave má
 
 // Configura CORS para permitir solicitudes desde tu dominio de Vercel
 const corsOptions = {
-  origin: ['https://lpc-colombia-4akcaffeb-sebaspro22210-gmailcoms-projects.vercel.app/'], // Reemplaza con el dominio de tu frontend
+  origin: ['https://lpc-colombia-1fnxh2hi0-sebaspro22210-gmailcoms-projects.vercel.app/'], // Reemplaza con el dominio de tu frontend
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true,
 };
