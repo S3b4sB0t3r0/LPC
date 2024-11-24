@@ -100,8 +100,8 @@ function Eventos() {
         )}
       </div>
 
-      {/* Controles de paginación */}
-      <div className="pagination">
+       {/* Controles de paginación */}
+       <div className="pagination">
         {Array.from({ length: totalPaginas }, (_, index) => (
           <button 
             key={index + 1} 
