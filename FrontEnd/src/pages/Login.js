@@ -81,28 +81,17 @@ function Login() {
       </form>
 
       {errorMessage && (
-        <div
-          className="notification error"
-          data-id="login.error"
-          aria-live="assertive"
-        >
+        <div className="notification error" data-id="login.error">
           {errorMessage}
         </div>
       )}
       {successMessage && (
-        <div
-          className="notification success"
-          data-id="login.success"
-          aria-live="polite"
-        >
+        <div className="notification success" data-id="login.success">
           {successMessage}
         </div>
       )}
-      <small>
-        ¿Olvidaste tu Contraseña? <a href="/restablecer">Ingresa Aquí</a>
-      </small>
+      <small>¿Olvidaste tu Contraseña? <a href="/restablecer">Ingresa Aquí</a></small>
     </div>
   );
 }
 
-export default Login;
