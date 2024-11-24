@@ -193,8 +193,14 @@ app.post('/login', async (req, res) => {
   const token = jwt.sign({ id: user._id, nombre: user.nombre }, SECRET_KEY);
 
   // Responder con el token y la información del usuario
-  res.status(200).json({ message: 'Inicio de sesión exitoso', token, nombre: user.nombre, correo: user.correo });
+  res.status(200).json({
+    message: 'Inicio de sesión exitoso',
+    token,
+    nombre: user.nombre,
+    correo: user.correo,
+  });
 });
+
 
 
 // Ruta para obtener información del usuario
