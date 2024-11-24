@@ -8,6 +8,7 @@ function Teatros() {
   const [paginaActual, setPaginaActual] = useState(1);
   const teatrosPorPagina = 6;
   const [usuarioAutenticado, setUsuarioAutenticado] = useState(false);  // Estado para verificar si el usuario está autenticado
+  const [error, setError] = useState(''); // Estado para manejar errores de carga
 
   useEffect(() => {
     // Cargar teatros
@@ -20,6 +21,7 @@ function Teatros() {
         const data = await response.json();
         setTeatros(data);
       } catch (error) {
+        setError('Hubo un error al cargar los teatros.');
         console.error('Error al cargar los teatros:', error);
       }
     };
@@ -28,7 +30,6 @@ function Teatros() {
 
     // Verificar si el usuario está autenticado (simulación con un estado)
     const verificarAutenticacion = () => {
-      // Simulación de autenticación. Deberías reemplazarlo con tu lógica real de autenticación.
       const usuario = localStorage.getItem('usuario'); // Aquí asumimos que si hay un "usuario" en localStorage, el usuario está autenticado
       setUsuarioAutenticado(!!usuario);  // Si el valor es nulo o vacío, el usuario no está autenticado
     };
@@ -56,12 +57,13 @@ function Teatros() {
   const totalPaginas = Math.ceil(teatrosFiltrados.length / teatrosPorPagina);
 
   const irANuevaPagina = (numeroPagina) => {
-    setPaginaActual(numeroPagina);
+    if (numeroPagina >= 1 && numeroPagina <= totalPaginas) {
+      setPaginaActual(numeroPagina);
+    }
   };
 
   const handleReservar = () => {
     if (teatroSeleccionado) {
-      // Aquí podrías agregar la lógica para la reserva, por ejemplo, redirigir a una página de pago o hacer una solicitud POST
       alert(`Reserva realizada para el teatro: ${teatroSeleccionado.titulo}`);
     }
   };
@@ -78,6 +80,9 @@ function Teatros() {
           className="buscador"
         />
       </div>
+
+      {error && <div className="error-message">{error}</div>}
+
       <div className="teatros-grid">
         {teatrosActuales.length > 0 ? (
           teatrosActuales.map((teatro) => (
@@ -93,7 +98,7 @@ function Teatros() {
 
       {/* Controles de paginación */}
       <div className="pagination">
-        {Array.from({ length: totalPaginas }, (_, index) => (
+        {totalPaginas > 1 && Array.from({ length: totalPaginas }, (_, index) => (
           <button
             key={index + 1}
             onClick={() => irANuevaPagina(index + 1)}
