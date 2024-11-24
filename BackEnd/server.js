@@ -11,7 +11,7 @@ const {
   sendRejectionEmail,
   sendRegistrationEmail
 } = require('./testEmail');  // Aquí se importan las funciones de envío de correo desde testEmail.js
-require("dotenv").config();
+
 
 
 const app = express();
