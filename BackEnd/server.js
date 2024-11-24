@@ -26,10 +26,11 @@ const SECRET_KEY = 'tu_clave_secreta_para_JWT'; // Cambia esto por una clave má
 
 // Configurar CORS para permitir tu dominio de Vercel
 app.use(cors({
-  origin: 'https://lpc-colombia-o382cft2m-sebaspro22210-gmailcoms-projects.vercel.app',
+  origin: '*', // Permite cualquier origen
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  credentials: true, // Si necesitas cookies o autenticación
+  credentials: true, // Opcional si necesitas autenticación
 }));
+
 
 
 
