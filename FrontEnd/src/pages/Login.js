@@ -6,6 +6,7 @@ import logo from '../image/logo/9.png'; // Asegúrate de que esta ruta sea corre
 function Login() {
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -14,11 +15,11 @@ function Login() {
     const data = Object.fromEntries(formData);
 
     try {
-      // Usa la variable de entorno para la URL de la API
-      const API_URL = process.env.REACT_APP_BACKEND_URL; // Esto obtiene la URL del backend desde la variable de entorno
+      // Usa la variable de entorno para la URL del backend
+      const API_URL = process.env.REACT_APP_BACKEND_URL;
 
       if (!API_URL) {
-        console.error("La variable de entorno REACT_APP_API_URL no está configurada correctamente.");
+        console.error("La variable de entorno REACT_APP_BACKEND_URL no está configurada correctamente.");
       }
 
       const response = await fetch(`${API_URL}/login`, {
@@ -72,29 +73,44 @@ function Login() {
         <h2>Iniciar Sesión</h2>
         <p>Accede a tu cuenta para continuar</p>
       </header>
-      
+
       <form id="login-form" onSubmit={handleSubmit}>
         <label htmlFor="email">Correo electrónico</label>
         <input type="email" name="email" id="email" placeholder="Correo electrónico*" required />
-        
+
         <label htmlFor="password">Contraseña</label>
-        <input type="password" name="password" id="password" placeholder="Contraseña" required />
-        
+        <div className="password-container">
+          <input
+            type={showPassword ? 'text' : 'password'}
+            name="password"
+            id="password"
+            placeholder="Contraseña"
+            required
+          />
+          <button type="button" onClick={() => setShowPassword(!showPassword)}>
+            {showPassword ? 'Ocultar' : 'Mostrar'}
+          </button>
+        </div>
+
         <br />
         <button type="submit">INICIAR SESIÓN</button>
       </form>
 
       {errorMessage && (
-        <div className="notification error" data-id="login.error">
+        <div className="notification error" data-id="login.error" aria-live="assertive">
           {errorMessage}
         </div>
       )}
+
       {successMessage && (
-        <div className="notification success" data-id="login.success">
+        <div className="notification success" data-id="login.success" aria-live="polite">
           {successMessage}
         </div>
       )}
-      <small>¿Olvidaste tu Contraseña? <a href="/restablecer">Ingresa Aquí</a></small>
+
+      <small>
+        ¿Olvidaste tu Contraseña? <a href="/restablecer">Ingresa Aquí</a>
+      </small>
     </div>
   );
 }
