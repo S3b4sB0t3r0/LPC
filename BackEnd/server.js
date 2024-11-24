@@ -23,14 +23,11 @@ app.use(express.json());
 const SECRET_KEY = 'tu_clave_secreta_para_JWT'; // Cambia esto por una clave más segura en producción
 
 
-
-
-
 // Configura CORS para permitir solicitudes desde tu dominio de Vercel
 const corsOptions = {
-  origin: process.env.CORS_ORIGIN, // Usamos la URL de frontend desde el archivo .env
+  origin: ['https://lpc-colombia-4akcaffeb-sebaspro22210-gmailcoms-projects.vercel.app/'], // Reemplaza con el dominio de tu frontend
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  credentials: true, // Si necesitas cookies o autenticación
+  credentials: true,
 };
 
 app.use(cors(corsOptions));
