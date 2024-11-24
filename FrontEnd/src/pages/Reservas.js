@@ -45,7 +45,10 @@ function Reservas() {
     };
 
     try {
-      const response = await fetch('http://localhost:4000/reservas', {
+      // Usa la variable de entorno para la URL del backend
+      const API_URL = process.env.REACT_APP_BACKEND_URL;
+
+      const response = await fetch(`${API_URL}/reservas`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

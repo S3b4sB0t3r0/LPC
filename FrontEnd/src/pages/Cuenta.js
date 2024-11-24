@@ -27,7 +27,8 @@ function Cuenta() {
   const fetchReservas = async () => {
     try {
       const token = localStorage.getItem('token'); // Asumiendo que el token se guarda en localStorage
-      const response = await fetch('http://localhost:4000/reservas', {
+      const API_URL = process.env.REACT_APP_BACKEND_URL; // Usar la URL del backend desde la variable de entorno
+      const response = await fetch(`${API_URL}/reservas`, {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${token}`,

@@ -5,7 +5,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import logo from '../image/logo/9.png'; // Asegúrate de que esta ruta sea correcta
 
-
 function Registro() {
   const [message, setMessage] = useState('');
   const [messageType, setMessageType] = useState('');
@@ -29,7 +28,10 @@ function Registro() {
     }
 
     try {
-      const response = await fetch('http://localhost:4000/Usuarios', {
+      // Usa la variable de entorno para la URL de la API
+      const API_URL = process.env.REACT_APP_BACKEND_URL;
+
+      const response = await fetch(`${API_URL}/Usuarios`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

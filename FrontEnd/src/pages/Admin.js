@@ -26,7 +26,7 @@ function Admin() {
   const [editEvento, setEditEvento] = useState(null);
   const [isEditEventModalOpen, setEditEventModalOpen] = useState(false);
 
-  const backendUrl = 'http://localhost:4000';
+  const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
   useEffect(() => {
     cargarDatos();
@@ -194,7 +194,7 @@ const totalPaginas = Math.ceil(eventosFiltrados.length / itemsPorPagina);
     const nuevoEstado = !evento.estado; // Cambia el estado
   
     try {
-      const respuesta = await fetch(`http://localhost:4000/api/eventos/${id}`, {
+      const respuesta = await fetch(`${backendUrl}/eventos/${editEvento._id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

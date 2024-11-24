@@ -14,7 +14,10 @@ function RestablecerContraseña() {
   useEffect(() => {
     const verificarToken = async () => {
       try {
-        const response = await fetch(`http://localhost:4000/restablecer/${token}`);
+        // Usa la variable de entorno para la URL del backend
+        const API_URL = process.env.REACT_APP_BACKEND_URL;
+
+        const response = await fetch(`${API_URL}/restablecer/${token}`);
         if (!response.ok) throw new Error('Token inválido o expirado');
         setMensaje('Token válido. Puedes establecer una nueva contraseña.');
         setMensajeTipo('success');
@@ -37,7 +40,10 @@ function RestablecerContraseña() {
     }
 
     try {
-      const response = await fetch(`http://localhost:4000/restablecer/${token}`, {
+      // Usa la variable de entorno para la URL del backend
+      const API_URL = process.env.REACT_APP_BACKEND_URL;
+
+      const response = await fetch(`${API_URL}/restablecer/${token}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
