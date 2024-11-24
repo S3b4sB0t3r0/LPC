@@ -11,6 +11,8 @@ const {
   sendRejectionEmail,
   sendRegistrationEmail
 } = require('./testEmail');  // Aquí se importan las funciones de envío de correo desde testEmail.js
+require("dotenv").config();
+
 
 const app = express();
 const PORT = 4000;
@@ -20,13 +22,23 @@ app.use(express.json());
 
 const SECRET_KEY = 'tu_clave_secreta_para_JWT'; // Cambia esto por una clave más segura en producción
 
-// Conectar a MongoDB
-mongoose.connect('mongodb://localhost:27017/LPC_COLOMBIA', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
-  .then(() => console.log('Conectado a MongoDB'))
-  .catch(err => console.error('Error al conectar a MongoDB', err));
+
+// Conexión a MongoDB Atlas
+const mongoURI = process.env.MONGO_URI || "mongodb+srv://logisticacolombianalpc:W0wddLtapyQcAHrR@lpc-colombia.ndyk7.mongodb.net/LPC_COLOMBIA?retryWrites=true&w=majority";
+
+mongoose
+  .connect(mongoURI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    console.log("Conexión exitosa a MongoDB Atlas");
+  })
+  .catch((err) => {
+    console.error("Error conectándose a MongoDB Atlas:", err);
+  });
+
+
 
 // Esquema de usuarios
 const userSchema = new mongoose.Schema({
