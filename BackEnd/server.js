@@ -23,6 +23,16 @@ app.use(express.json());
 const SECRET_KEY = 'tu_clave_secreta_para_JWT'; // Cambia esto por una clave más segura en producción
 
 
+
+// Configurar CORS para permitir tu dominio de Vercel
+app.use(cors({
+  origin: 'https://lpc-colombia-o382cft2m-sebaspro22210-gmailcoms-projects.vercel.app',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true, // Si necesitas cookies o autenticación
+}));
+
+
+
 // Conexión a MongoDB Atlas
 const mongoURI = process.env.MONGO_URI || "mongodb+srv://logisticacolombianalpc:W0wddLtapyQcAHrR@lpc-colombia.ndyk7.mongodb.net/LPC_COLOMBIA?retryWrites=true&w=majority";
 
