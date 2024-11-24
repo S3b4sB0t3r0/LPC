@@ -27,18 +27,19 @@ const SECRET_KEY = 'tu_clave_secreta_para_JWT'; // Cambia esto por una clave má
 // Configurar CORS para permitir tu dominio de Vercel
 const corsOptions = {
   origin: (origin, callback) => {
-    const allowedOrigins = [process.env.FRONTEND_URL];
-    if (allowedOrigins.includes(origin) || !origin) {
+    // Permitir cualquier subdominio de vercel.app
+    if (origin && (origin.includes('.vercel.app') || origin === 'http://localhost:3000')) {
       callback(null, true);
     } else {
       callback(new Error('No permitido por CORS'));
     }
   },
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  credentials: true,
+  credentials: true, // Si necesitas autenticación o cookies, mantenlo en true
 };
 
 app.use(cors(corsOptions));
+
 
 
 
