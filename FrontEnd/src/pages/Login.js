@@ -15,15 +15,12 @@ function Login() {
     const data = Object.fromEntries(formData);
 
     try {
-      // Usa la variable de entorno para la URL de la API
       const API_URL = process.env.REACT_APP_API_URL;
 
-      // Validar si la URL de la API está configurada
       if (!API_URL) {
         throw new Error("La variable de entorno REACT_APP_API_URL no está configurada correctamente.");
       }
 
-      // Enviar la solicitud de login
       const response = await fetch(`${API_URL}/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -33,21 +30,19 @@ function Login() {
         }),
       });
 
-      // Verificar si la respuesta es exitosa
+      // Verifica si la respuesta no es exitosa
       if (!response.ok) {
-        const result = await response.json(); // Si no es ok, obtener el mensaje de error
+        const result = await response.json(); // Obtener el mensaje de error del servidor
         setErrorMessage(result.message || 'Correo o contraseña incorrectos');
         setTimeout(() => {
           setErrorMessage('');
         }, 3000);
-        return; // Detener el flujo si hay error
+        return; // Detener el flujo si hay un error
       }
 
       const result = await response.json(); // Si la respuesta es ok, obtener el resultado
       const token = result.token; // Guarda el token
       localStorage.setItem('token', token);
-
-      // Guarda la información del usuario en localStorage
       localStorage.setItem('user', JSON.stringify({
         nombre: result.nombre,
         correo: data.email,
@@ -56,7 +51,6 @@ function Login() {
       setSuccessMessage('Inicio de sesión exitoso. Redirigiendo...');
       setTimeout(() => {
         setSuccessMessage('');
-        // Redirige al administrador si es el usuario especial
         if (data.email === 'Sebas@GLC.com') {
           navigate('/admin');
         } else {
