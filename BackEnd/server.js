@@ -23,15 +23,28 @@ app.use(express.json());
 const SECRET_KEY = 'tu_clave_secreta_para_JWT'; // Cambia esto por una clave más segura en producción
 
 
-// Configura CORS para permitir solicitudes desde tu dominio de Vercel
+
+// Lista de dominios permitidos (incluyendo Vercel y localhost para desarrollo)
+const allowedOrigins = [
+  'https://lpc-colombia-4akcaffeb-sebaspro22210-gmailcoms-projects.vercel.app',  // Dominio de Vercel
+  'http://localhost:3000', // Para desarrollo local
+];
+
 const corsOptions = {
-  origin: ['https://lpc-colombia-1fnxh2hi0-sebaspro22210-gmailcoms-projects.vercel.app/'], // Reemplaza con el dominio de tu frontend
+  origin: (origin, callback) => {
+    // Permitir orígenes de la lista de orígenes permitidos
+    if (allowedOrigins.includes(origin) || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error('No permitido por CORS'));
+    }
+  },
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  credentials: true,
+  credentials: true, // Si estás usando cookies o autenticación por sesión, debe ser true
 };
 
+// Aplicar CORS a todas las rutas
 app.use(cors(corsOptions));
-
 
 
 
@@ -154,27 +167,34 @@ app.post('/Usuarios', async (req, res) => {
   }
 });
 
-// inicio de sesion
+
+// Ruta para iniciar sesión
 app.post('/login', async (req, res) => {
   const { correo, contraseña } = req.body;
 
-  // Lógica para validar el usuario y generar un token
+  // Buscar al usuario por correo
   const user = await Usuario.findOne({ correo });
   if (!user) {
     return res.status(400).json({ message: 'Correo o contraseña incorrectos' });
   }
 
+  // Verificar si el usuario está activo
+  if (!user.estado) {
+    return res.status(403).json({ message: 'Usuario inactivado, comuníquese con el soporte.' });
+  }
+
+  // Validar la contraseña
   const isPasswordValid = await bcrypt.compare(contraseña, user.contraseña);
   if (!isPasswordValid) {
     return res.status(400).json({ message: 'Correo o contraseña incorrectos' });
   }
 
+  // Generar token JWT
   const token = jwt.sign({ id: user._id, nombre: user.nombre }, SECRET_KEY);
+
+  // Responder con el token y la información del usuario
   res.status(200).json({ message: 'Inicio de sesión exitoso', token, nombre: user.nombre, correo: user.correo });
 });
-
-
-
 
 
 // Ruta para obtener información del usuario
