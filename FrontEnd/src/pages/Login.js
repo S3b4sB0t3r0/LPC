@@ -14,7 +14,7 @@ function Login() {
     const data = Object.fromEntries(formData);
 
     try {
-      const response = await fetch('http://localhost:4000/login', {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -28,7 +28,7 @@ function Login() {
       if (response.ok) {
         const token = result.token; // Guarda el token
         localStorage.setItem('token', token);
-        
+
         localStorage.setItem('user', JSON.stringify({
           nombre: result.nombre,
           correo: data.email,
@@ -78,16 +78,26 @@ function Login() {
       </form>
 
       {errorMessage && (
-        <div className="notification error" data-id="login.error">
+        <div
+          className="notification error"
+          data-id="login.error"
+          aria-live="assertive"
+        >
           {errorMessage}
         </div>
       )}
       {successMessage && (
-        <div className="notification success" data-id="login.success">
+        <div
+          className="notification success"
+          data-id="login.success"
+          aria-live="polite"
+        >
           {successMessage}
         </div>
       )}
-      <small>¿Olvidaste tu Contraseña? <a href="/restablecer">Ingresa Aquí</a></small>
+      <small>
+        ¿Olvidaste tu Contraseña? <a href="/restablecer">Ingresa Aquí</a>
+      </small>
     </div>
   );
 }
