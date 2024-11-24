@@ -11,22 +11,20 @@ function Eventos() {
   useEffect(() => {
     const cargarEventos = async () => {
       try {
-        const response = await fetch('http://localhost:4000/eventos');
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/eventos`);
         if (!response.ok) {
           throw new Error('Error al obtener los eventos');
         }
         const data = await response.json();
-        // Asegúrate de que 'estado' es un booleano
         const eventosConDisponibilidad = data.map(evento => ({
           ...evento,
-          disponible: evento.estado, // Asegúrate de que esto se alinee con tu esquema
+          disponible: evento.estado,
         }));
         setEventos(eventosConDisponibilidad);
       } catch (error) {
         console.error('Error al cargar los eventos:', error);
       }
     };
-
     cargarEventos();
   }, []);
 
