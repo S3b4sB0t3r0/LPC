@@ -22,7 +22,6 @@ app.use(express.json());
 
 const SECRET_KEY = 'tu_clave_secreta_para_JWT'; // Cambia esto por una clave más segura en producción
 
-const cors = require('cors');
 
 app.use(cors({
     origin: process.env.CORS_ORIGIN || '*', // Dominio del frontend desplegado
