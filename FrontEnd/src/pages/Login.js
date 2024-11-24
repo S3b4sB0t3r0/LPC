@@ -15,7 +15,8 @@ function Login() {
     const data = Object.fromEntries(formData);
 
     try {
-      const API_URL = process.env.REACT_APP_API_URL;
+      const API_URL = process.env.REACT_APP_BACKEND_URL;  // Esto debe ser correctamente definido en .env
+
 
       if (!API_URL) {
         throw new Error("La variable de entorno REACT_APP_API_URL no está configurada correctamente.");
