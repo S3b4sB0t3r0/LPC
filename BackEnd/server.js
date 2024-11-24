@@ -28,6 +28,7 @@ const SECRET_KEY = 'tu_clave_secreta_para_JWT'; // Cambia esto por una clave má
 const allowedOrigins = [
   'https://lpc-colombia-o382cft2m-sebaspro22210-gmailcoms-projects.vercel.app',
   'https://lpc-colombia-a2i4441pa-sebaspro22210-gmailcoms-projects.vercel.app',
+  'https://lpc-colombia-nxsnu8bu9-sebaspro22210-gmailcoms-projects.vercel.app/',
 ];
 
 app.use(cors({
