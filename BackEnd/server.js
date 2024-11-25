@@ -23,39 +23,30 @@ app.use(express.json());
 
 const SECRET_KEY = process.env.SECRET_KEY;
 
-// Middleware para proteger rutas que requieren autenticación
-const authenticateToken = (req, res, next) => {
-  const token = req.header('Authorization')?.split(' ')[1]; // Asumiendo el formato 'Bearer <token>'
-  if (!token) return res.status(401).json({ message: 'Token no proporcionado' });
-
-  jwt.verify(token, SECRET_KEY, (err, user) => {
-    if (err) return res.status(403).json({ message: 'Token inválido' });
-    req.user = user;
-    next();
-  });
-};
 
 
-
-
-// Lista de dominios permitidos (incluyendo Vercel y localhost para desarrollo)
+// Lista de dominios permitidos (incluyendo Vercel, Render y localhost para desarrollo)
 const allowedOrigins = [
-  'https://lpc-colombia-4akcaffeb-sebaspro22210-gmailcoms-projects.vercel.app',  // Dominio de Vercel
+  'https://lpc-colombia-nqnipqdjy-sebaspro22210-gmailcoms-projects.vercel.app',  // Dominio de Vercel
+  'https://lpc-colombia.onrender.com', // Dominio de Render (backend desplegado)
+  'http://localhost:3000', // Para desarrollo local en React (puedes cambiar el puerto si usas otro)
 ];
 
 const corsOptions = {
   origin: (origin, callback) => {
+    // Permitir orígenes de la lista de orígenes permitidos
     if (allowedOrigins.includes(origin) || !origin) {
       callback(null, true);
     } else {
       callback(new Error('No permitido por CORS'));
     }
   },
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Métodos permitidos
+  credentials: true, // Si estás usando cookies o autenticación por sesión, debe ser true
 };
 
 app.use(cors(corsOptions));
+
 
 
 
