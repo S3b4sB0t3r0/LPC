@@ -25,27 +25,15 @@ const SECRET_KEY = process.env.SECRET_KEY;
 
 
 
-// Lista de dominios permitidos (incluyendo Vercel, Render y localhost para desarrollo)
-const allowedOrigins = [
-  'https://lpc-colombia-nqnipqdjy-sebaspro22210-gmailcoms-projects.vercel.app',  // Dominio de Vercel
-  'https://lpc-colombia.onrender.com', // Dominio de Render (backend desplegado)
-  'http://localhost:3000', // Para desarrollo local en React (puedes cambiar el puerto si usas otro)
-];
+// Allow all origins (not recommended for production)
+app.use(cors());
 
-const corsOptions = {
-  origin: (origin, callback) => {
-    // Permitir orígenes de la lista de orígenes permitidos
-    if (allowedOrigins.includes(origin) || !origin) {
-      callback(null, true);
-    } else {
-      callback(new Error('No permitido por CORS'));
-    }
-  },
-  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Métodos permitidos
-  credentials: true, // Si estás usando cookies o autenticación por sesión, debe ser true
-};
-
-app.use(cors(corsOptions));
+// Or, more securely, specify allowed origins
+app.use(cors({
+  origin: 'https://lpc-colombia-nqnipqdjy-sebaspro22210-gmailcoms-projects.vercel.app',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+}));
 
 
 
